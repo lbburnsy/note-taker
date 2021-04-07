@@ -26,11 +26,24 @@ app.get("/api/notes", (req, res) => res.sendFile(path.join(__dirname, "db/db.jso
 
  // A route to post new notes
 app.post("/api/notes", (req, res) => {
-    const newNote = req.body;
-    let id = uniqid();
-    // console.log(newNote.title);
-    // console.log(newNote.text);
-})
+    fs.readFile(path.join(__dirname, "db/db.json"), "utf8", (err, res) => {
+        if (err) throw err;
+        const notesArray = JSON.parse(res);
+        const noteInput = req.body;
+        const id = uniqid();
+        const newNote = {
+            id: id,
+            title: noteInput.title,
+            text: noteInput.text
+        };
+        notesArray.push(newNote);
+        res.json(newNote);
+        fs.writeFile(path.join(__dirname, "db/db.json"), JSON.stringify(notesArray), (err) => {
+            if (err) throw err;
+        });
+    });
+});
+
 
 // Starts the server to begin listening
 app.listen(PORT, () => console.log(`App listening on PORT ${PORT}`));
