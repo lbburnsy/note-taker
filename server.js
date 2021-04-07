@@ -24,11 +24,19 @@ app.get("/notes", (req, res) => res.sendFile(path.join(__dirname, "public/notes.
 // A route for the notes api
 app.get("/api/notes", (req, res) => res.sendFile(path.join(__dirname, "db/db.json")));
 
+// Need a route to populate notes
+app.get("/api/notes", (req, res) => {
+    fs.readFile("db/db.json", "utf8", (err, notes) => {
+        if (err) throw err;
+        res.json(JSON.parse(notes));
+    })
+})
+
  // A route to post new notes
 app.post("/api/notes", (req, res) => {
-    fs.readFile(path.join(__dirname, "db/db.json"), "utf8", (err, res) => {
+    fs.readFile(path.join(__dirname, "db/db.json"), "utf8", (err, response) => {
         if (err) throw err;
-        let notesArray = JSON.parse(res);
+        let notesArray = JSON.parse(response);
         const noteInput = req.body;
         const id = uniqid();
         const newNote = {
@@ -47,15 +55,15 @@ app.post("/api/notes", (req, res) => {
 // A route to delete new notes
 app.delete("/api/notes/:id", (req, res) => {
     const id = req.params.id;
-    fs.readFile("db/db.json", "utf8", (err, res) => {
+    fs.readFile("db/db.json", "utf8", (err, response) => {
         if (err) throw err;
-        let notesArray = JSON.parse(res);
+        let notesArray = JSON.parse(response);
         for (let i = 0; i < notesArray.length; i++) {
             if (notesArray[i].id === id) {
-                console.log(notesArray);
                 notesArray.splice(notesArray[i],1);
             }
         }
+        res.json(notesArray);
         fs.writeFile("db/db.json", JSON.stringify(notesArray), (err) => {
             if (err) throw err;
         })
