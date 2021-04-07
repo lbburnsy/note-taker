@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const uniqid = require('uniqid');
+const { static } = require('express');
 
 // Sets up the express App
 const app = express();
@@ -11,12 +12,14 @@ const PORT = process.env.PORT || 3000;
 // Sets up the Express app to handle data parsing
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+// Does something to serve the CSS so that the server can render it
+app.use(express.static('public'));
 
 // A route for the homepage
-app.get("/", (req, res) => res.sendFile(path.join(__dirname, "index.html")));
+app.get("/", (req, res) => res.sendFile(path.join(__dirname, "public/index.html")));
 
 // A route for the notes page
-app.get("/notes", (req, res) => res.sendFile(path.join(__dirname, "notes.html")));
+app.get("/notes", (req, res) => res.sendFile(path.join(__dirname, "public/notes.html")));
 
 // A route for the notes api
 app.get("/api/notes", (req, res) => res.json(notes));
