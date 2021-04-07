@@ -22,7 +22,7 @@ app.get("/", (req, res) => res.sendFile(path.join(__dirname, "public/index.html"
 app.get("/notes", (req, res) => res.sendFile(path.join(__dirname, "public/notes.html")));
 
 // A route for the notes api
-app.get("/api/notes", (req, res) => res.json(notes));
+app.get("/api/notes", (req, res) => res.sendFile(path.join(__dirname, "db/db.json")));
 
 // Starts the server to begin listening
 app.listen(PORT, () => console.log(`App listening on PORT ${PORT}`));
