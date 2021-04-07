@@ -28,7 +28,7 @@ app.get("/api/notes", (req, res) => res.sendFile(path.join(__dirname, "db/db.jso
 app.post("/api/notes", (req, res) => {
     fs.readFile(path.join(__dirname, "db/db.json"), "utf8", (err, res) => {
         if (err) throw err;
-        const notesArray = JSON.parse(res);
+        let notesArray = JSON.parse(res);
         const noteInput = req.body;
         const id = uniqid();
         const newNote = {
@@ -47,7 +47,19 @@ app.post("/api/notes", (req, res) => {
 // A route to delete new notes
 app.delete("/api/notes/:id", (req, res) => {
     const id = req.params.id;
-    console.log(id);
+    fs.readFile("db/db.json", "utf8", (err, res) => {
+        if (err) throw err;
+        let notesArray = JSON.parse(res);
+        for (let i = 0; i < notesArray.length; i++) {
+            if (notesArray[i].id === id) {
+                console.log(notesArray);
+                notesArray.splice(notesArray[i],1);
+            }
+        }
+        fs.writeFile("db/db.json", JSON.stringify(notesArray), (err) => {
+            if (err) throw err;
+        })
+    })
 })
 
 // Starts the server to begin listening
