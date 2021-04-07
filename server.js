@@ -44,6 +44,11 @@ app.post("/api/notes", (req, res) => {
     });
 });
 
+// A route to delete new notes
+app.delete("/api/notes/:id", (req, res) => {
+    const id = req.params.id;
+    console.log(id);
+})
 
 // Starts the server to begin listening
 app.listen(PORT, () => console.log(`App listening on PORT ${PORT}`));
