@@ -1,6 +1,8 @@
 // Dependencies
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
+const uniqid = require('uniqid');
 
 // Sets up the express App
 const app = express();
