@@ -27,7 +27,7 @@ npm install
 
 ## License
 
-This project is licensed under the MIT license. Please visit [the license file](./license) for more info.
+This project is licensed under the MIT license. Please visit [the license file](https://github.com/lbburnsy/note-taker/blob/main/LICENSE) for more info.
 
 ## Authors
 
