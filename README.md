@@ -23,7 +23,7 @@ npm install
 
 ## Visuals
 
-![Demo](./images/functionality.gif)
+![Demo](./Images/functionality.gif)
 
 ## License
 
