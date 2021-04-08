@@ -60,7 +60,7 @@ app.delete("/api/notes/:id", (req, res) => {
         let notesArray = JSON.parse(response);
         for (let i = 0; i < notesArray.length; i++) {
             if (notesArray[i].id === id) {
-                notesArray.splice(notesArray[i],1);
+                notesArray.splice(i,1);
             }
         }
         res.json(notesArray);
